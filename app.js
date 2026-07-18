@@ -148,7 +148,7 @@ function generateUniqueKey(templateId, params) {
     return `${templateId}[${vals.join(',')}]`;
 }
 
-const g = 9.8;
+const g = 10;
 
 // System State Variables
 let currentSection = 'home';
@@ -486,7 +486,7 @@ function initYmSim() {
     const outDl = document.getElementById('lbl-sim-ym-dl-val');
 
     // Constants
-    const g = 9.8;
+    const g = 10;
     const Y_values = {
         tungsten: 35e10,
         steel: 20e10,
@@ -834,7 +834,7 @@ const QUESTION_TEMPLATES = [
         id: '17_1_3_ym_find_elong', topic: '17.1.3', type: 'numeric_single',
         title: 'หาระยะยืดของลวดเหล็กกล้า',
         inputs: [{ label: 'ระยะยืดออกของลวด (cm):' }],
-        text: (p) => `ลวดเหล็กกล้ามีความยาว \\( ${p.l0} \\text{ m} \\) มีพื้นที่หน้าตัด \\( ${p.area} \\text{ cm}^2 \\) แขวนวัตถุมวล \\( ${p.r ? `(${p.m_base} + \\ ${p.r * 10})` : p.m} \\text{ kg} \\) ไว้ในแนวดิ่ง จงหาว่าลวดจะยืดออกจากเดิมกี่เซนติเมตร (กำหนดให้ มอดุลัสของยังเหล็กกล้า \\( Y = 2.0 \\times 10^{11} \\text{ N/m}^2 \\) และเร่งโน้มถ่วง \\( g = 9.8 \\text{ m/s}^2 \\))`,
+        text: (p) => `ลวดเหล็กกล้ามีความยาว \\( ${p.l0} \\text{ m} \\) มีพื้นที่หน้าตัด \\( ${p.area} \\text{ cm}^2 \\) แขวนวัตถุมวล \\( ${p.r ? `(${p.m_base} + \\ ${p.r * 10})` : p.m} \\text{ kg} \\) ไว้ในแนวดิ่ง จงหาว่าลวดจะยืดออกจากเดิมกี่เซนติเมตร (กำหนดให้ มอดุลัสของยังเหล็กกล้า \\( Y = 2.0 \\times 10^{11} \\text{ N/m}^2 \\) และเร่งโน้มถ่วง \\( g = 10 \\text{ m/s}^2 \\))`,
         generate: (r) => {
             const offset = getOffsetFromR(r);
             const l0 = r ? getSeededRandomBase('17_1_3_ym_find_elong_l0', r, 2.0, 5.0, 0.5) : 4.0;
@@ -854,7 +854,7 @@ const QUESTION_TEMPLATES = [
                 answersRaw: [dl_cm],
                 explanation: () => `
       จากสูตร: \\( Y = \\frac{F L_0}{A \\Delta L} \\Rightarrow \\Delta L = \\frac{F L_0}{A Y} \\)<br>
-      - แรงดึง \\( F = mg = ${m} \\times 9.8 = ${F.toFixed(0)} \\text{ N} \\)<br>
+      - แรงดึง \\( F = mg = ${m} \\times 10 = ${F.toFixed(0)} \\text{ N} \\)<br>
       - พื้นที่หน้าตัด \\( A = ${area} \\text{ cm}^2 = ${area} \\times 10^{-4} \\text{ m}^2 \\)<br>
       - มอดุลัสของยัง \\( Y = 2.0 \\times 10^{11} \\text{ N/m}^2 \\)<br>
       แทนค่าหาหน่วยเมตร:<br>
@@ -870,7 +870,7 @@ const QUESTION_TEMPLATES = [
         id: '17_1_4_safety_max_mass', topic: '17.1.4', type: 'numeric_single',
         title: 'คำนวณหามวลสูงสุดที่ไม่ทำให้ลวดสูญเสียสภาพยืดหยุ่น',
         inputs: [{ label: 'มวลสูงสุด (kg):' }],
-        text: (p) => `ลวดโลหะชนิดหนึ่งมีขีดจำกัดสภาพยืดหยุ่นเกิดขึ้นที่ความเค้น \\( ${p.elastic_stress} \\times 10^8 \\text{ Pa} \\) ถ้าลวดเส้นนี้มีขนาดเส้นผ่านศูนย์กลาง \\( ${p.r ? `(${p.d_base} + \\ ${p.r * 0.1})` : p.d} \\text{ mm} \\) จะสามารถนำมาแขวนมวลวัตถุสูงสุดได้กี่กิโลกรัมโดยที่ลวดยังสามารถคืนสภาพความยาวเดิมได้อยู่ (กำหนดให้ \\( g = 9.8 \\text{ m/s}^2 \\))`,
+        text: (p) => `ลวดโลหะชนิดหนึ่งมีขีดจำกัดสภาพยืดหยุ่นเกิดขึ้นที่ความเค้น \\( ${p.elastic_stress} \\times 10^8 \\text{ Pa} \\) ถ้าลวดเส้นนี้มีขนาดเส้นผ่านศูนย์กลาง \\( ${p.r ? `(${p.d_base} + \\ ${p.r * 0.1})` : p.d} \\text{ mm} \\) จะสามารถนำมาแขวนมวลวัตถุสูงสุดได้กี่กิโลกรัมโดยที่ลวดยังสามารถคืนสภาพความยาวเดิมได้อยู่ (กำหนดให้ \\( g = 10 \\text{ m/s}^2 \\))`,
         generate: (r) => {
             const offset = getOffsetFromR(r);
             const elastic_stress = r ? getSeededRandomBase('17_1_4_safety_max_mass_s', r, 1.5, 3.5, 0.5) : 2.5; // * 10^8
@@ -891,7 +891,7 @@ const QUESTION_TEMPLATES = [
       \\( \\sigma_{\\text{max}} = \\frac{F_{\\text{max}}}{A} \\Rightarrow F_{\\text{max}} = \\sigma_{\\text{max}} \\times A \\)<br>
       - พื้นที่หน้าตัดวงกลม \\( A = \\pi r^2 = \\pi \\left(\\frac{${d.toFixed(2)} \\times 10^{-3}}{2}\\right)^2 = ${formatScientificLaTeX(A, 4)} \\text{ m}^2 \\)<br>
       - แรงดึงสูงสุด: \\( F_{\\text{max}} = (${elastic_stress} \\times 10^8) \\times ${formatScientificLaTeX(A, 4)} = ${F_max.toFixed(1)} \\text{ N} \\)<br>
-      - หามวลสูงสุด: \\( M_{\\text{max}} = \\frac{F_{\\text{max}}}{g} = \\frac{${F_max.toFixed(1)}}{9.8} = ${m_max.toFixed(1)} \\text{ kg} \\)
+      - หามวลสูงสุด: \\( M_{\\text{max}} = \\frac{F_{\\text{max}}}{g} = \\frac{${F_max.toFixed(1)}}{10} = ${m_max.toFixed(1)} \\text{ kg} \\)
     `
             };
         }
@@ -954,6 +954,101 @@ const QUESTION_TEMPLATES = [
       - **ข้อ 4 ผิด:** มอดุลัสของยังบอกถึงความยากง่ายในการยืดตัวของวัสดุ (ความชันในช่วงแปรผันตรง) ไม่ใช่จุดแตกร้าวหรือความทนทานต่อแรงดึงสูงสุด
     `
         })
+    },
+    {
+        id: '17_1_1_concept_stress_copper_steel', topic: '17.1.1', type: 'choice',
+        title: 'เปรียบเทียบความเค้นของลวดต่างชนิดที่ขนาดเท่ากัน',
+        choices: [
+            'ความเค้นตามยาวของลวดทั้งสองมีค่าเท่ากัน',
+            'ความเค้นตามยาวของลวดเหล็กกล้ามีค่ามากกว่าลวดทองแดง',
+            'ความเค้นตามยาว of ลวดทองแดงมีค่ามากกว่าลวดเหล็กกล้า',
+            'ไม่สามารถเปรียบเทียบได้หากไม่ทราบค่ามอดุลัสของยังของวัสดุทั้งสอง'
+        ],
+        text: () => `ลวดทองแดงและลวดเหล็กกล้ามีพื้นที่หน้าตัดและความยาวเท่ากันทุกประการ เมื่อนำน้ำหนักมวลเท่ากันมาแขวนไว้ที่ปลายลวดในแนวดิ่งเพื่อให้ลวดตึง ข้อใดกล่าวถูกต้องที่สุดเกี่ยวกับความเค้นตามยาวที่เกิดขึ้นในเส้นลวดทั้งสอง`,
+        generate: (r) => ({
+            params: {},
+            answers: ['ความเค้นตามยาวของลวดทั้งสองมีค่าเท่ากัน'],
+            answersRaw: [0],
+            explanation: () => `
+      ความเค้นตามยาว (\\( \\sigma \\)) คำนวณได้จากสูตร \\( \\sigma = \\frac{F}{A} \\) ซึ่งขึ้นอยู่กับแรงดึง (\\( F \\)) และพื้นที่หน้าตัดของเส้นลวด (\\( A \\)) เท่านั้น เมื่อลวดทั้งสองเส้นมีพื้นที่หน้าตัดเท่ากันและรับน้ำหนักเท่ากัน (แรงดึงเท่ากัน) ความเค้นตามยาวที่เกิดขึ้นในลวดทั้งสองเส้นจึงมีค่าเท่ากัน โดยไม่ขึ้นกับชนิดของวัสดุ
+    `
+        })
+    },
+    {
+        id: '17_1_2_concept_strain_unit', topic: '17.1.2', type: 'choice',
+        title: 'สมบัติของความเครียดตามยาวและความเค้นตามยาว',
+        choices: [
+            'ความเครียดตามยาวไม่มีหน่วยวัด ส่วนความเค้นตามยาวมีหน่วยเป็นนิวตันต่อตารางเมตร (\\(\\text{N/m}^2\\))',
+            'ความเค้นตามยาวไม่มีหน่วยวัด ส่วนความเครียดตามยาวมีหน่วยเป็นนิวตัน (\\(\\text{N}\\))',
+            'ทั้งความเครียดตามยาวและความเค้นตามยาวเป็นปริมาณทางฟิสิกส์ที่ไม่มีหน่วยวัด',
+            'ทั้งความเครียดตามยาวและความเค้นตามยาวมีหน่วยวัดเดียวกันคือ นิวตันต่อตารางเมตร (\\(\\text{N/m}^2\\))'
+        ],
+        text: () => `เมื่อวัสดุได้รับแรงกระทำตามแนวยาว ข้อความใดระบุคุณลักษณะเชิงปริมาณของความเค้นตามยาว (Stress) และความเครียดตามยาว (Strain) ได้ถูกต้องที่สุด`,
+        generate: (r) => ({
+            params: {},
+            answers: ['ความเครียดตามยาวไม่มีหน่วยวัด ส่วนความเค้นตามยาวมีหน่วยเป็นนิวตันต่อตารางเมตร (\\(\\text{N/m}^2\\))'],
+            answersRaw: [0],
+            explanation: () => `
+      ความเครียดตามยาว (\\( \\varepsilon \\)) คืออัตราส่วนระหว่างความยาวที่เปลี่ยนไปกับความยาวเดิม (\\( \\varepsilon = \\frac{\\Delta L}{L_0} \\)) ซึ่งเป็นปริมาณมิติเดียวกันหารกัน จึงเป็นปริมาณไม่มีหน่วย ส่วนความเค้นตามยาว (\\( \\sigma = \\frac{F}{A} \\)) คือแรงต่อหน่วยพื้นที่ จึงมีหน่วยเป็น นิวตันต่อตารางเมตร (\\(\\text{N/m}^2\\)) หรือ พาสคัล (\\(\\text{Pa}\\))
+    `
+        })
+    },
+    {
+        id: '17_1_3_concept_ym_elongation', topic: '17.1.3', type: 'choice',
+        title: 'ความสัมพันธ์ระหว่างมอดุลัสของยังและการยืดตัว',
+        choices: [
+            'ลวดที่มีมอดุลัสของยังสูงกว่าจะยืดออกได้น้อยกว่าลวดที่มีมอดุลัสของยังต่ำกว่า',
+            'ลวดที่มีมอดุลัสของยังสูงกว่าจะยืดออกได้มากกว่าลวดที่มีมอดุลัสของยังต่ำกว่า',
+            'ลวดทั้งสองเส้นจะยืดออกได้เท่ากันทุกประการเนื่องจากรับน้ำหนักมวลเท่ากัน',
+            'ลวดที่มีมอดุลัสของยังสูงกว่าจะเปลี่ยนสภาพจากความเค้นเป็นความเครียดช้ากว่า'
+        ],
+        text: () => `ลวดสองเส้นทำด้วยวัสดุคนละชนิดกัน แต่มีความยาวเริ่มต้นและขนาดเส้นผ่านศูนย์กลางเท่ากันทุกประการ เมื่อนำมาแขวนวัตถุมวลเท่ากันในแนวดิ่ง ข้อใดอธิบายการยืดตัว of ลวดทั้งสองเมื่อเปรียบเทียบกับค่ามอดุลัสของยัง (Young's Modulus) ได้ถูกต้องที่สุด`,
+        generate: (r) => ({
+            params: {},
+            answers: ['ลวดที่มีมอดุลัสของยังสูงกว่าจะยืดออกได้น้อยกว่าลวดที่มีมอดุลัสของยังต่ำกว่า'],
+            answersRaw: [0],
+            explanation: () => `
+      จากสมการมอดุลัสของยัง \\( Y = \\frac{F L_0}{A \\Delta L} \\) สามารถจัดรูปใหม่เพื่อหาระยะยืดได้เป็น \\( \\Delta L = \\frac{F L_0}{A Y} \\)<br>เมื่อลวดมีแรงดึง (\\( F \\)) ความยาวเริ่มต้น (\\( L_0 \\)) และพื้นที่หน้าตัด (\\( A \\)) เท่ากัน ระยะยืด (\\( \\Delta L \\)) จะแปรผกผันกับมอดุลัสของยัง (\\( Y \\)) ดังนั้นลวดที่มีมอดุลัสของยังสูงกว่าจึงยืดออกได้น้อยกว่า
+    `
+        })
+    },
+    {
+        id: '17_1_4_concept_safety_factor', topic: '17.1.4', type: 'choice',
+        title: 'จุดประสงค์การใช้ตัวคูณความปลอดภัยในการออกแบบทางวิศวกรรม',
+        choices: [
+            'เพื่อจำกัดความเค้นใช้งานจริงไม่ให้เกินขีดจำกัดสภาพยืดหยุ่น ป้องกันวัสดุเสียรูปถาวรหรือชำรุด',
+            'เพื่อเพิ่มค่ามอดุลัสของยัง (Young\'s Modulus) ของวัสดุโครงสร้างให้สูงขึ้นขณะรับน้ำหนักจริง',
+            'เพื่อช่วยให้โครงสร้างเกิดความเค้นและความเครียดที่มีค่าเป็นศูนย์ตลอดระยะเวลาการใช้งาน',
+            'เพื่อเร่งให้วัสดุเปลี่ยนสภาพจากช่วงยืดหยุ่นเข้าสู่ช่วงพลาสติกได้อย่างรวดเร็วและทนทานขึ้น'
+        ],
+        text: () => `ในการออกแบบทางวิศวกรรม เช่น การเลือกขนาดเสาเข็มรับน้ำหนักสะพาน เหตุใดวิศวกรจึงต้องกำหนดค่าความเค้นที่ยอมให้ใช้งานจริงต่ำกว่าความเค้นดึงสูงสุดของวัสดุ (หรือใช้ตัวคูณความปลอดภัย Safety Factor มากกว่า 1)`,
+        generate: (r) => ({
+            params: {},
+            answers: ['เพื่อจำกัดความเค้นใช้งานจริงไม่ให้เกินขีดจำกัดสภาพยืดหยุ่น ป้องกันวัสดุเสียรูปถาวรหรือชำรุด'],
+            answersRaw: [0],
+            explanation: () => `
+      การนำวัสดุไปใช้งานจริง ต้องควบคุมไม่ให้ความเค้นเกินขีดจำกัดสภาพยืดหยุ่น (Elastic Limit) เพื่อป้องกันไม่ให้โครงสร้างบิดเบี้ยวหรือเกิดการเสียรูปถาวร (Plastic Deformation) และต้องเผื่อความปลอดภัยสำหรับการรับโหลดจริงที่อาจเกินความคาดหมายหรือการเสื่อมสภาพของวัสดุ
+    `
+        })
+    },
+    {
+        id: '17_1_5_concept_ym_graph', topic: '17.1.5', type: 'choice',
+        title: 'ความชันของกราฟความเค้น-ความเครียดของโลหะต่างชนิด',
+        choices: [
+            'ทังสเตน > เหล็กกล้า > อะลูมิเนียม',
+            'อะลูมิเนียม > เหล็กกล้า > ทังสเตน',
+            'เหล็กกล้า > ทังสเตน > อะลูมิเนียม',
+            'ทุกเส้นมีความชันเท่ากันเพราะมีขนาดพื้นที่หน้าตัดเท่ากัน'
+        ],
+        text: () => `ถ้านำแท่งโลหะขนาดเท่ากัน 3 ชนิด คือ ทังสเตน (\\( Y = 35 \\times 10^{10} \\text{ N/m}^2 \\)) เหล็กกล้า (\\( Y = 20 \\times 10^{10} \\text{ N/m}^2 \\)) และอะลูมิเนียม (\\( Y = 7.0 \\times 10^{10} \\text{ N/m}^2 \\)) มาทดสอบเพื่อเขียนกราฟความสัมพันธ์ระหว่างความเค้นตามยาว (แกนตั้ง) และความเครียดตามยาว (แกนนอน) ข้อใดเรียงลำดับความชันของเส้นกราฟในช่วงการแปรผันตรงจากมากไปน้อยได้ถูกต้องที่สุด`,
+        generate: (r) => ({
+            params: {},
+            answers: ['ทังสเตน > เหล็กกล้า > อะลูมิเนียม'],
+            answersRaw: [0],
+            explanation: () => `
+      ค่ามอดุลัสของยัง (\\( Y \\)) หาได้จากอัตราส่วนความเค้นตามยาวต่อความเครียดตามยาว (\\( Y = \\frac{\\sigma}{\\varepsilon} \\)) ซึ่งก็คือความชัน (Slope) ของเส้นกราฟแสดงความสัมพันธ์ระหว่างความเค้นและความเครียดในช่วงแปรผันตรง ดังนั้น วัสดุที่มีมอดุลัสของยังสูงกว่า กราฟจะมีความชันมากกว่า จึงเรียงลำดับความชันได้เป็น ทังสเตน > เหล็กกล้า > อะลูมิเนียม
+    `
+        })
     }
 ];
 
@@ -965,7 +1060,7 @@ for (let i = 1; i <= 13; i++) {
             id: `17_1_1_generated_stress_var_${i}`, topic: '17.1.1', type: 'numeric_single',
             title: `การวิเคราะห์ความเค้นตามยาว (ชุดที่ ${i})`,
             inputs: [{ label: 'ความเค้นตามยาว (Pa):' }],
-            text: (p) => `ลวดเหล็กกล้ามีเส้นผ่านศูนย์กลางหน้าตัดเป็นวงกลมขนาด \\( ${p.dia} \\text{ mm} \\) ถูกดึงด้วยน้ำหนักมวล \\( ${p.r ? `(${p.m_base} + \\ ${p.r * 5})` : p.m} \\text{ kg} \\) แขวนไว้ในแนวดิ่ง จงหาความเค้นตามยาวในเส้นลวดนี้ในหน่วยพาสคัล (กำหนดให้ \\( g = 9.8 \\text{ m/s}^2 \\))`,
+            text: (p) => `ลวดเหล็กกล้ามีเส้นผ่านศูนย์กลางหน้าตัดเป็นวงกลมขนาด \\( ${p.dia} \\text{ mm} \\) ถูกดึงด้วยน้ำหนักมวล \\( ${p.r ? `(${p.m_base} + \\ ${p.r * 5})` : p.m} \\text{ kg} \\) แขวนไว้ในแนวดิ่ง จงหาความเค้นตามยาวในเส้นลวดนี้ในหน่วยพาสคัล (กำหนดให้ \\( g = 10 \\text{ m/s}^2 \\))`,
             generate: (r) => {
                 const offset = getOffsetFromR(r);
                 const dia = r ? getSeededRandomBase(`17_1_1_gen_d_${i}`, r, 0.8, 1.8, 0.2) : 1.0;
@@ -982,7 +1077,7 @@ for (let i = 1; i <= 13; i++) {
                     answersRaw: [stress],
                     explanation: () => `
           คำนวณจากสูตร: \\( \\sigma = \\frac{F}{A} \\)<br>
-          - แรงดึง \\( F = mg = ${m} \\times 9.8 = ${F.toFixed(1)} \\text{ N} \\)<br>
+          - แรงดึง \\( F = mg = ${m} \\times 10 = ${F.toFixed(1)} \\text{ N} \\)<br>
           - พื้นที่หน้าตัด \\( A = \\pi r^2 = \\pi \\left(\\frac{${dia} \\times 10^{-3}}{2}\\right)^2 = ${formatScientificLaTeX(area, 4)} \\text{ m}^2 \\)<br>
           แทนค่า:<br>
           \\( \\sigma = \\frac{${F.toFixed(1)}}{${formatScientificLaTeX(area, 4)}} = ${formatScientificLaTeX(stress, 3)} \\text{ Pa} \\)
@@ -1272,26 +1367,32 @@ function startExamProcess() {
     };
 
     // Filter questions by subtopics:
-    const q_Stress = QUESTION_TEMPLATES.filter(q => q.topic === '17.1.1');
-    const q_Strain = QUESTION_TEMPLATES.filter(q => q.topic === '17.1.2');
-    const q_Ym = QUESTION_TEMPLATES.filter(q => q.topic === '17.1.3');
-    const q_Safety = QUESTION_TEMPLATES.filter(q => q.topic === '17.1.4');
-    const q_Ratio = QUESTION_TEMPLATES.filter(q => q.topic === '17.1.5');
+    const topics = ['17.1.1', '17.1.2', '17.1.3', '17.1.4', '17.1.5'];
+    
+    // Choose one topic randomly to be the choice question
+    const choiceTopicIndex = Math.floor(Math.random() * topics.length);
+    const choiceTopic = topics[choiceTopicIndex];
 
-    const shuffled_Stress = pureShuffle(q_Stress);
-    const shuffled_Strain = pureShuffle(q_Strain);
-    const shuffled_Ym = pureShuffle(q_Ym);
-    const shuffled_Safety = pureShuffle(q_Safety);
-    const shuffled_Ratio = pureShuffle(q_Ratio);
-
-    // Build unique 5-question layout covering all subtopics
-    let selectedTemplates = [
-        shuffled_Stress[0],
-        shuffled_Strain[0],
-        shuffled_Ym[0],
-        shuffled_Safety[0],
-        shuffled_Ratio[0]
-    ];
+    let selectedTemplates = [];
+    topics.forEach((topic) => {
+        if (topic === choiceTopic) {
+            const choiceQs = QUESTION_TEMPLATES.filter(q => q.topic === topic && q.type === 'choice');
+            if (choiceQs.length > 0) {
+                selectedTemplates.push(pureShuffle(choiceQs)[0]);
+            } else {
+                const allQs = QUESTION_TEMPLATES.filter(q => q.topic === topic);
+                selectedTemplates.push(pureShuffle(allQs)[0]);
+            }
+        } else {
+            const numericQs = QUESTION_TEMPLATES.filter(q => q.topic === topic && q.type !== 'choice');
+            if (numericQs.length > 0) {
+                selectedTemplates.push(pureShuffle(numericQs)[0]);
+            } else {
+                const allQs = QUESTION_TEMPLATES.filter(q => q.topic === topic);
+                selectedTemplates.push(pureShuffle(allQs)[0]);
+            }
+        }
+    });
 
     selectedTemplates = pureShuffle(selectedTemplates);
 
