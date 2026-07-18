@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟิสิกส์ ม.6: บทที่ 17.1 ของแข็งและสภาพยืดหยุ่นของของแข็ง 🔩</title>
+
+    <!-- Preconnect to external domains for performance optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Google Fonts: Prompt & Sarabun (Non-blocking) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap">
+    </noscript>
+
+    <!-- FontAwesome Icons (Non-blocking) -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+
+    <!-- MathJax Configuration for LaTeX -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Banner -->
+    <header class="text-white sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div
+                    class="bg-cyan-500/20 text-cyan-300 p-3 rounded-xl border border-cyan-400/30 shadow-inner text-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold tracking-wide text-white drop-shadow-md">ฟิสิกส์ ม.6 บทที่ 17 เรื่องของแข็งและของไหล</h1>
+                    <p class="text-xs md:text-sm text-cyan-200">บทที่ 17.1 ของแข็งและสภาพยืดหยุ่นของของแข็ง | โรงเรียนห้องสอนศึกษา ในพระอุปถัมภ์ฯ</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-2">
+                <span
+                    class="bg-black/40 text-cyan-300 px-3 py-1.5 rounded-full text-xs font-semibold border border-white/10">
+                    <i class="fa-solid fa-graduation-cap mr-1"></i> มัธยมศึกษาปีที่ 6
+                </span>
+                <button onclick="showSection('home')"
+                    class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/10 transition flex items-center gap-1">
+                    <i class="fa-solid fa-house"></i> หน้าแรก
+                </button>
+            </div>
+            <div class="w-full md:hidden flex items-center justify-between">
+                <span
+                    class="bg-black/40 text-cyan-200 px-3 py-1.5 rounded-full text-[11px] font-semibold border border-white/10">มัธยมศึกษาปีที่ 6</span>
+                <button onclick="toggleMobileMenu()"
+                    class="bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg text-sm transition"
+                    aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-md">
+            <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-2 gap-2 text-sm font-medium text-white">
+                <button onclick="showSection('home')"
+                    class="bg-white/10 hover:bg-white/20 rounded-lg py-2 transition">หน้าหลัก</button>
+                <button onclick="showSection('review')"
+                    class="bg-white/10 hover:bg-white/20 rounded-lg py-2 transition">บทเรียน</button>
+                <button onclick="showSection('practice')"
+                    class="bg-white/10 hover:bg-white/20 rounded-lg py-2 transition">ฝึกโจทย์</button>
+                <button onclick="showSection('exam-start')"
+                    class="bg-white/10 hover:bg-white/20 rounded-lg py-2 transition">สอบเก็บคะแนน</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+
+        <!-- ==================================================== -->
+        <!-- SECTION 1: HOME / LANDING PAGE -->
+        <!-- ==================================================== -->
+        <section id="sec-home" class="space-y-8 animate-[fadeIn_0.5s_ease-out]">
+            <!-- Welcome Hero Card -->
+            <div
+                class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+
+                <!-- Decorative background elements -->
+                <div
+                    class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-cyan-50 rounded-full blur-3xl opacity-60 pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-slate-100 rounded-full blur-3xl opacity-60 pointer-events-none">
+                </div>
+
+                <div class="space-y-4 max-w-2xl relative z-10">
+                    <span
+                        class="bg-cyan-100 text-cyan-800 border border-cyan-200 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
+                        ฟิสิกส์ ม.6 บทที่ 17.1
+                    </span>
+                    <h2 class="text-2xl md:text-4xl font-extrabold text-slate-800 leading-tight">
+                        ของแข็งและสภาพยืดหยุ่น <br class="hidden md:block">
+                        <span class="text-cyan-600 text-xl md:text-3xl font-mono mt-1 inline-block">\( (Y = \frac{\sigma}{\varepsilon}) \)</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                        ศึกษาพฤติกรรมเชิงกลของของแข็งเมื่อได้รับแรงกระทำ สภาพยืดหยุ่นและสภาพพลาสติก 
+                        ความเค้นตามยาว \( (\sigma) \) ความเครียดตามยาว \( (\varepsilon) \) และมอดุลัสของยัง \( (Y) \) 
+                        ผ่านการทดลองเสมือนจริงและการวัดค่าที่แม่นยำ
+                    </p>
+
+                    <div id="latest-score-badge"
+                        class="hidden bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-sm">
+                        <div class="flex items-center gap-2 text-xs md:text-sm text-slate-600">
+                            <i class="fa-solid fa-clipboard-check text-cyan-600 text-lg"></i>
+                            <span>ผลสอบล่าสุดของคุณ: <strong id="lbl-last-score"
+                                    class="text-slate-800">-</strong></span>
+                        </div>
+                        <button onclick="showLatestResultModal()"
+                            class="text-cyan-600 hover:text-cyan-800 font-semibold text-xs flex items-center gap-1 transition">
+                            <i class="fa-solid fa-eye"></i> ดูผลสอบ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic (Wire Tension Diagram) -->
+                <div class="w-full md:w-72 flex justify-center relative z-10">
+                    <svg class="w-56 h-56 drop-shadow-xl" viewBox="0 0 200 200" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- Ceiling -->
+                        <line x1="40" y1="30" x2="160" y2="30" stroke="#334155" stroke-width="8" stroke-linecap="round" />
+                        <line x1="50" y1="30" x2="60" y2="20" stroke="#475569" stroke-width="3" />
+                        <line x1="70" y1="30" x2="80" y2="20" stroke="#475569" stroke-width="3" />
+                        <line x1="90" y1="30" x2="100" y2="20" stroke="#475569" stroke-width="3" />
+                        <line x1="110" y1="30" x2="120" y2="20" stroke="#475569" stroke-width="3" />
+                        <line x1="130" y1="30" x2="140" y2="20" stroke="#475569" stroke-width="3" />
+                        <!-- Hanging Wire -->
+                        <line x1="100" y1="30" x2="100" y2="120" stroke="#0891b2" stroke-width="4" id="hero-wire" class="wire-vibrate" />
+                        <!-- Stretched/Deformed Overlay -->
+                        <line x1="100" y1="120" x2="100" y2="140" stroke="#06b6d4" stroke-dasharray="3,3" stroke-width="2" />
+                        <!-- Weight hanger / Load -->
+                        <rect x="75" y="140" width="50" height="25" rx="4" fill="#1e293b" stroke="#475569" stroke-width="2" />
+                        <!-- Force Arrow -->
+                        <path d="M 100 165 L 100 190 M 95 183 L 100 190 L 105 183" stroke="#ef4444" stroke-width="3" fill="none" />
+                        <!-- Labels -->
+                        <text x="100" y="157" fill="#ffffff" font-size="11" font-weight="bold" font-family="Prompt" text-anchor="middle">M</text>
+                        <text x="115" y="80" fill="#0891b2" font-size="14" font-weight="bold" font-family="sans-serif">Y</text>
+                        <text x="115" y="183" fill="#ef4444" font-size="12" font-weight="bold" font-family="sans-serif">F = mg</text>
+                        <text x="80" y="80" fill="#334155" font-size="14" font-weight="bold" font-family="sans-serif">L₀</text>
+                        <!-- Delta L arrow -->
+                        <path d="M 50 120 L 50 140 M 47 123 L 50 120 L 53 123 M 47 137 L 50 140 L 53 137" stroke="#0891b2" stroke-width="1.5" />
+                        <text x="40" y="134" fill="#0891b2" font-size="11" font-weight="bold" font-family="sans-serif" text-anchor="end">ΔL</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Main Action Buttons -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <button onclick="showSection('review')"
+                    class="group text-left bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-cyan-300 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-cyan-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110">
+                    </div>
+                    <div
+                        class="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center text-xl mb-4 relative z-10">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2 relative z-10">
+                        1. ทบทวนเนื้อหา <i
+                            class="fa-solid fa-arrow-right text-sm text-cyan-500 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                    </h3>
+                    <p class="text-sm text-slate-500 leading-relaxed relative z-10">ศึกษาพฤติกรรม สภาพยืดหยุ่น/พลาสติก และการทดลองมอดุลัสของยัง</p>
+                </button>
+
+                <button onclick="showSection('practice')"
+                    class="group text-left bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110">
+                    </div>
+                    <div
+                        class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 relative z-10">
+                        <i class="fa-solid fa-pencil"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2 relative z-10">
+                        2. ฝึกทำโจทย์ <i
+                            class="fa-solid fa-arrow-right text-sm text-blue-500 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                    </h3>
+                    <p class="text-sm text-slate-500 leading-relaxed relative z-10">ระบบสุ่มโจทย์และโจทย์มาตรฐานเรื่อง ความเค้น ความเครียด และมอดุลัส</p>
+                </button>
+
+                <button onclick="showSection('exam-start')"
+                    class="group text-left bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-red-300 hover:shadow-md transition-all duration-300 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-red-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110">
+                    </div>
+                    <div
+                        class="w-12 h-12 bg-red-100 text-red-600 rounded-xl flex items-center justify-center text-xl mb-4 relative z-10">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2 relative z-10">
+                        3. สอบเก็บคะแนน <i
+                            class="fa-solid fa-arrow-right text-sm text-red-500 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                    </h3>
+                    <p class="text-sm text-slate-500 leading-relaxed relative z-10">ทดสอบจับเวลา 15 นาที จำนวน 5 ข้อ (ปรนัย 1 ข้อ และคำนวณ 4 ข้อ)</p>
+                </button>
+            </div>
+
+            <!-- Formulas Box -->
+            <div
+                class="bg-gradient-to-br from-slate-900 to-slate-950 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-800 text-white space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                    <div
+                        class="text-cyan-400 text-2xl flex items-center justify-center bg-black/30 border border-white/10 p-2.5 rounded-xl">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white tracking-wide">สรุปสมการสำคัญ [Formulas 17.1]</h4>
+                        <p class="text-sm text-slate-300">สภาพยืดหยุ่น ความเค้น ความเครียด และมอดุลัสของยัง</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Card 1: Stress -->
+                    <div class="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-cyan-500/50 transition">
+                        <div
+                            class="text-cyan-400 font-bold text-[10px] md:text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-weight-hanging"></i> 17.1.2 ความเค้นตามยาว
+                        </div>
+                        <h5 class="font-bold text-sm mb-2 text-slate-100">ความเค้นตามยาว \( (\sigma) \)</h5>
+                        <p class="text-[11px] md:text-xs text-slate-300 leading-relaxed mb-2">แรงดึงหรือแรงอัดแนวตั้งฉากต่อหน่วยพื้นที่หน้าตัด
+                        </p>
+                        <div
+                            class="text-[11px] font-mono text-cyan-300 bg-black/40 p-2 rounded text-center border border-white/5">
+                            \( \sigma = \frac{F}{A} \quad (\text{Pa} \text{ หรือ } \text{N/m}^2) \)
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Strain -->
+                    <div class="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-blue-500/50 transition">
+                        <div
+                            class="text-blue-400 font-bold text-[10px] md:text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrows-left-right"></i> 17.1.2 ความเครียดตามยาว
+                        </div>
+                        <h5 class="font-bold text-sm mb-2 text-slate-100">ความเครียดตามยาว \( (\varepsilon) \)</h5>
+                        <p class="text-[11px] md:text-xs text-slate-300 leading-relaxed mb-2">อัตราส่วนความยาวที่เปลี่ยนไปกับความยาวเริ่มต้น
+                        </p>
+                        <div
+                            class="text-[11px] font-mono text-blue-300 bg-black/40 p-2 rounded text-center border border-white/5">
+                            \( \varepsilon = \frac{\Delta L}{L_0} \quad (\text{ไม่มีหน่วย}) \)
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Young's Modulus -->
+                    <div
+                        class="bg-black/30 p-4 rounded-xl border border-white/10 hover:border-emerald-500/50 transition">
+                        <div
+                            class="text-emerald-400 font-bold text-[10px] md:text-xs mb-1 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-anchor"></i> 17.1.3 มอดุลัสของยัง
+                        </div>
+                        <h5 class="font-bold text-sm mb-2 text-slate-100">มอดุลัสของยัง \( (Y) \)</h5>
+                        <p class="text-[11px] md:text-xs text-slate-300 leading-relaxed mb-2">ค่าอัตราส่วนความเค้นต่อความเครียดในช่วงแปรผันตรง</p>
+                        <div
+                            class="text-[11px] font-mono text-emerald-300 bg-black/40 p-2 rounded text-center border border-white/5 font-bold text-sm py-1.5">
+                            \( Y = \frac{\sigma}{\varepsilon} = \frac{F L_0}{A \Delta L} \quad (\text{Pa}) \)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 2: REVIEW SYSTEM -->
+        <!-- ==================================================== -->
+        <section id="sec-review" class="hidden space-y-6 animate-[fadeIn_0.3s_ease-out]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">🔩 ทบทวนบทเรียน: สภาพยืดหยุ่นและมอดุลัสของยัง</h2>
+                    <p class="text-sm text-slate-500">ทดลองปรับเปลี่ยนตัวแปรในระบบ Simulator เพื่อศึกษาพฤติกรรมเชิงกลและมอดุลัสของยัง</p>
+                </div>
+                <button onclick="showSection('home')"
+                    class="self-start sm:self-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold border border-slate-200 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-chevron-left"></i> กลับหน้าแรก
+                </button>
+            </div>
+
+            <!-- Segment Tabs -->
+            <div class="flex flex-wrap bg-slate-100 p-1.5 rounded-xl gap-1 max-w-4xl border border-slate-200">
+                <button onclick="switchReviewTab('17-1-1')" id="btn-tab-17-1-1"
+                    class="flex-1 min-w-[140px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 bg-white text-cyan-800 shadow-sm border border-slate-200/50">
+                    1. สภาพยืดหยุ่น & พลาสติก
+                </button>
+                <button onclick="switchReviewTab('17-1-3')" id="btn-tab-17-1-3"
+                    class="flex-1 min-w-[140px] text-center py-2 text-xs md:text-sm font-bold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/50">
+                    2. มอดุลัสของยัง (Virtual Lab)
+                </button>
+            </div>
+
+            <!-- TAB 1: สภาพยืดหยุ่น & พลาสติก -->
+            <div id="review-tab-17-1-1" class="space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-cyan-600">
+                        <i class="fa-solid fa-circle-nodes"></i> Simulator: สภาพยืดหยุ่น สภาพพลาสติก และจุดแตกหัก
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-6">
+                        สังเกตการตอบสนองของวัสดุเมื่อมีแรงภายนอกมากระทำ ลองปรับขนาดแรงดึงเพื่อเปรียบเทียบช่วงสภาพยืดหยุ่น (หดกลับได้) และสภาพพลาสติก (ยืดถาวร) จนถึงจุดแตกหัก (หัก/ขาด)
+                    </p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <!-- Animation Box -->
+                        <div
+                            class="lg:col-span-6 bg-slate-900 p-6 rounded-2xl flex flex-col justify-center items-center relative min-h-[300px] border border-slate-800 shadow-inner">
+                            <canvas id="sim-elastic-canvas" width="250" height="200"
+                                class="bg-slate-950 border-4 border-cyan-900/50 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.2)]"></canvas>
+                        </div>
+
+                        <!-- Controller Box -->
+                        <div
+                            class="lg:col-span-6 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4">
+                            <div class="space-y-5">
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-2">
+                                        <span>เลือกวัสดุ:</span>
+                                    </div>
+                                    <select id="sim-elastic-material" onchange="initElasticSim()"
+                                        class="w-full text-sm font-bold border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                                        <option value="steel" selected>ลวดเหล็กกล้า (Steel Wire) - แข็งแรงมาก ยืดตัวยาก</option>
+                                        <option value="copper">ลวดทองแดง (Copper Wire) - นิ่มลง ยืดง่ายขึ้น</option>
+                                        <option value="rubber">เส้นยางยืด (Rubber Band) - ยืดหยุ่นสูงมาก ดึงได้ยาว</option>
+                                        <option value="clay">ดินน้ำมัน (Plastic Clay) - ไม่มีสภาพยืดหยุ่น (พลาสติกล้วน)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-2">
+                                        <span>ออกแรงดึงวัตถุ \( (F) \):</span>
+                                        <span id="lbl-sim-elastic-force"
+                                            class="text-cyan-600 font-bold text-sm bg-cyan-100 px-2 py-0.5 rounded">0 N</span>
+                                    </div>
+                                    <input type="range" id="sim-elastic-slider" min="0" max="1000" step="10" value="0"
+                                        class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cyan-600">
+                                </div>
+                            </div>
+
+                            <!-- Output Panel -->
+                            <div
+                                class="bg-slate-800 text-white p-4 rounded-xl border border-slate-700 shadow-inner mt-4">
+                                <span class="text-[10px] text-slate-400 block font-bold tracking-wider mb-2">ความเค้น \( \sigma = F/A \) และ ความเครียด \( \varepsilon = \Delta L / L_0 \)</span>
+                                <div class="space-y-1.5 text-xs">
+                                    <div class="flex justify-between">
+                                        <span>ความเค้นตามยาว \( (\sigma) \):</span>
+                                        <span id="lbl-sim-elastic-stress" class="font-mono font-bold text-slate-300">0.00 Pa</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>ความเครียดตามยาว \( (\varepsilon) \):</span>
+                                        <span id="lbl-sim-elastic-strain" class="font-mono font-bold text-slate-300">0.0000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm border-t border-slate-700 pt-2 mt-2">
+                                        <span>สถานะทางกายภาพ:</span>
+                                        <span id="lbl-sim-elastic-state" class="font-bold text-teal-400">ปกติ (ไม่มีแรงกระทำ)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: มอดุลัสของยัง -->
+            <div id="review-tab-17-1-3" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2 text-cyan-600">
+                        <i class="fa-solid fa-chart-line"></i> Simulator: ห้องปฏิบัติการมอดุลัสของยังเสมือนจริง
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-6">
+                        จำลองกิจกรรมการทดลองแขวนน้ำหนักกับลวดโลหะเพื่อวัดระยะยืด สังเกตกราฟความสัมพันธ์ระหว่างความเค้นและความเครียดที่มีความชันเท่ากับ <strong>มอดุลัสของยัง (Young's Modulus: $Y$)</strong>
+                    </p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <!-- Dual Canvas Box (Visual Lab & Graph) -->
+                        <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-slate-900 p-4 rounded-2xl flex flex-col justify-center items-center border border-slate-800 shadow-inner">
+                                <span class="text-[10px] text-slate-400 font-bold block mb-2"><i class="fa-solid fa-wrench"></i> ภาพการทดลอง</span>
+                                <canvas id="sim-ym-canvas" width="220" height="200" class="bg-slate-950 border border-slate-800 rounded"></canvas>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-2xl flex flex-col justify-center items-center border border-slate-800 shadow-inner">
+                                <span class="text-[10px] text-slate-400 font-bold block mb-2"><i class="fa-solid fa-chart-area"></i> กราฟ Stress (Y) vs Strain (X)</span>
+                                <canvas id="sim-ym-graph-canvas" width="220" height="200" class="bg-slate-950 border border-slate-800 rounded"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Controller Box -->
+                        <div
+                            class="lg:col-span-6 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-4">
+                            <div class="space-y-3.5">
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                                        <span>ชนิดลวดตัวนำ:</span>
+                                    </div>
+                                    <select id="sim-ym-material" onchange="initYmSim()"
+                                        class="w-full text-xs font-bold border border-slate-300 rounded px-2 py-1.5 bg-white focus:outline-none focus:ring-1 focus:ring-cyan-500">
+                                        <option value="tungsten">ทังสเตน (Tungsten) - Y ≈ 35 × 10¹⁰ Pa</option>
+                                        <option value="steel" selected>เหล็กกล้า (Steel) - Y ≈ 20 × 10¹⁰ Pa</option>
+                                        <option value="copper">ทองแดง (Copper) - Y ≈ 11 × 10¹⁰ Pa</option>
+                                        <option value="aluminum">อลูมิเนียม (Aluminum) - Y ≈ 7 × 10¹⁰ Pa</option>
+                                        <option value="glass">แก้ว (Glass) - Y ≈ 6 × 10¹⁰ Pa</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                                            <span>ความยาวเดิม \( (L_0) \):</span>
+                                            <span id="lbl-sim-ym-l0" class="text-slate-500 font-mono">2.0 m</span>
+                                        </div>
+                                        <input type="range" id="sim-ym-l0-slider" min="1.0" max="5.0" step="0.5" value="2.0"
+                                            class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cyan-600">
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-[11px] font-semibold text-slate-700 mb-1">
+                                            <span>เส้นผ่านศูนย์กลาง \( (d) \):</span>
+                                            <span id="lbl-sim-ym-d" class="text-slate-500 font-mono">1.0 mm</span>
+                                        </div>
+                                        <input type="range" id="sim-ym-d-slider" min="0.4" max="2.0" step="0.2" value="1.0"
+                                            class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cyan-600">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                                        <span>มวลถ่วงน้ำหนักเพื่อดึงลวด \( (M) \):</span>
+                                        <span id="lbl-sim-ym-mass"
+                                            class="text-cyan-600 font-bold bg-cyan-100 px-2 rounded">0 kg</span>
+                                    </div>
+                                    <input type="range" id="sim-ym-mass-slider" min="0" max="100" step="5" value="0"
+                                        class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cyan-600">
+                                </div>
+                            </div>
+
+                            <!-- YM Output Panel -->
+                            <div
+                                class="bg-slate-800 text-white p-3.5 rounded-xl border border-slate-700 shadow-inner mt-2">
+                                <span class="text-[9px] text-slate-400 block font-bold tracking-wider mb-1.5">สมการมอดุลัสของยัง \( Y = \frac{\sigma}{\varepsilon} = \frac{F L_0}{A \Delta L} \)</span>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] font-mono">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">พื้นที่หน้าตัด A:</span>
+                                        <span id="lbl-sim-ym-area-val">0.79 mm²</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">แรงดึงลวด F:</span>
+                                        <span id="lbl-sim-ym-force-val">0 N</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">ความเค้น \( \sigma \):</span>
+                                        <span id="lbl-sim-ym-stress-val">0 Pa</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">ความเครียด \( \varepsilon \):</span>
+                                        <span id="lbl-sim-ym-strain-val">0.0000</span>
+                                    </div>
+                                    <div class="flex justify-between col-span-2 border-t border-slate-700/50 pt-1 mt-1 text-xs">
+                                        <span class="text-cyan-400 font-bold">ระยะยืดของลวด \( (\Delta L) \):</span>
+                                        <span id="lbl-sim-ym-dl-val" class="text-cyan-300 font-bold">0.000 mm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 3: PRACTICE MODE -->
+        <!-- ==================================================== -->
+        <section id="sec-practice" class="hidden space-y-6 animate-[fadeIn_0.3s_ease-out]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">🧠 ตะลุยโจทย์: ของแข็งและสภาพยืดหยุ่น</h2>
+                    <p class="text-sm text-slate-500">ระบบสุ่มตัวแปรและโจทย์มาตรฐาน อิงตามหนังสือเรียน สสวท. บทที่ 17.1</p>
+                </div>
+                <button onclick="showSection('home')"
+                    class="self-start sm:self-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold border border-slate-200 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-chevron-left"></i> กลับหน้าแรก
+                </button>
+            </div>
+
+            <!-- Mode Selector -->
+            <div id="total-questions-display" class="total-questions-badge">
+                คลังข้อสอบทั้งหมด : <span id="total-count">0</span> ข้อ
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <button onclick="startPracticeMode('17-1-1')" id="btn-prac-17-1-1"
+                    class="p-4 bg-white hover:bg-cyan-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-3 transition text-left shadow-sm hover:shadow">
+                    <div
+                        class="w-9 h-9 shrink-0 bg-cyan-100 rounded-lg flex items-center justify-center text-cyan-600 text-xs font-bold">
+                        17.1.2</div>
+                    <div>
+                        <h4 class="font-bold text-xs whitespace-nowrap">ความเค้นตามยาว</h4>
+                        <p class="text-[9px] text-slate-500">คำนวณหา \( \sigma = F/A \)</p>
+                    </div>
+                </button>
+                <button onclick="startPracticeMode('17-1-2')" id="btn-prac-17-1-2"
+                    class="p-4 bg-white hover:bg-blue-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-3 transition text-left shadow-sm hover:shadow">
+                    <div
+                        class="w-9 h-9 shrink-0 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-xs font-bold">
+                        17.1.2</div>
+                    <div>
+                        <h4 class="font-bold text-xs whitespace-nowrap">ความเครียดตามยาว</h4>
+                        <p class="text-[9px] text-slate-500">หาความยาวที่ยืดขึ้น \( \varepsilon \)</p>
+                    </div>
+                </button>
+                <button onclick="startPracticeMode('17-1-3')" id="btn-prac-17-1-3"
+                    class="p-4 bg-white hover:bg-indigo-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-3 transition text-left shadow-sm hover:shadow">
+                    <div
+                        class="w-9 h-9 shrink-0 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-xs font-bold">
+                        17.1.3</div>
+                    <div>
+                        <h4 class="font-bold text-xs whitespace-nowrap">มอดุลัสของยัง</h4>
+                        <p class="text-[9px] text-slate-500">คำนวณ \( Y = \sigma / \varepsilon \)</p>
+                    </div>
+                </button>
+                <button onclick="startPracticeMode('17-1-4')" id="btn-prac-17-1-4"
+                    class="p-4 bg-white hover:bg-orange-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-3 transition text-left shadow-sm hover:shadow">
+                    <div
+                        class="w-9 h-9 shrink-0 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 text-xs font-bold">
+                        17.1.4</div>
+                    <div>
+                        <h4 class="font-bold text-xs whitespace-nowrap">ขีดความปลอดภัย</h4>
+                        <p class="text-[9px] text-slate-500">หาขีดจำกัดแรงดึงสูงสุด</p>
+                    </div>
+                </button>
+                <button onclick="startPracticeMode('17-1-5')" id="btn-prac-17-1-5"
+                    class="p-4 bg-white hover:bg-emerald-50 text-slate-800 rounded-xl border border-slate-200 flex items-center gap-3 transition text-left shadow-sm hover:shadow">
+                    <div
+                        class="w-9 h-9 shrink-0 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 text-sm font-bold">
+                        <i class="fa-solid fa-scale-unbalanced"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs whitespace-nowrap">โจทย์อัตราส่วน</h4>
+                        <p class="text-[9px] text-slate-500">วิเคราะห์เปรียบเทียบวัสดุ</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Live Practice Container -->
+            <div id="practice-arena"
+                class="hidden bg-white rounded-2xl p-6 shadow-md border border-slate-200 space-y-6 relative">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                    <span
+                        class="bg-slate-800 text-white border border-slate-700 px-3 py-1 rounded-full text-xs font-bold self-start"
+                        id="prac-badge-mode">
+                        โหมดการฝึกฝน
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <select id="prac-type-select" onchange="regeneratePractice()"
+                            class="text-xs font-bold border border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-500">
+                            <option value="standard" selected>โจทย์ตัวเลขคงที่ (ตามคู่มือเรียน)</option>
+                            <option value="random">โจทย์สุ่มตัวเลข (RNG ตามเลขที่นักเรียน)</option>
+                        </select>
+                        <button onclick="regeneratePractice()"
+                            class="text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 px-2.5 py-1.5 rounded-lg transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate"></i> ข้อต่อไป
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question Display -->
+                <div class="bg-slate-50 p-5 md:p-8 rounded-2xl border border-slate-200">
+                    <span class="text-[11px] text-slate-400 font-bold uppercase tracking-wider block mb-3"
+                        id="prac-question-title">📋 ข้อคำถาม:</span>
+                    <p id="prac-question-text"
+                        class="text-base md:text-lg text-slate-800 font-medium leading-relaxed math-font">
+                        - กำลังสร้างโจทย์ -
+                    </p>
+                </div>
+
+                <!-- User Answer Form -->
+                <div class="space-y-4 max-w-2xl mx-auto">
+                    <h4 class="font-bold text-sm text-slate-700 text-center mb-4">✍ ️ระบุคำตอบของคุณ</h4>
+
+                    <!-- Choice Zone -->
+                    <div id="prac-choice-zone" class="grid grid-cols-1 gap-3 hidden"></div>
+
+                    <!-- Numeric Zone -->
+                    <div id="prac-numeric-zone" class="space-y-4 max-w-md mx-auto flex flex-col items-center">
+                        <div class="w-full">
+                            <label id="lbl-prac-input-1"
+                                class="block text-xs font-bold text-slate-600 mb-1.5 text-center">คำตอบ:</label>
+                            <input type="text" autocomplete="off" id="prac-input-val1" placeholder="ระบุตัวเลขคำตอบ"
+                                class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:outline-none focus:border-slate-500 focus:ring-4 focus:ring-slate-500/10 text-center font-mono text-lg transition">
+                        </div>
+                        <div id="prac-input-zone-2" class="w-full hidden">
+                            <label id="lbl-prac-input-2"
+                                class="block text-xs font-bold text-slate-600 mb-1.5 text-center">คำตอบ 2:</label>
+                            <input type="text" autocomplete="off" id="prac-input-val2" placeholder="ระบุตัวเลขคำตอบ"
+                                class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:outline-none focus:border-slate-500 focus:ring-4 focus:ring-slate-500/10 text-center font-mono text-lg transition">
+                        </div>
+
+                        <button id="btn-prac-skip" onclick="regeneratePractice()"
+                            class="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition border border-slate-200">
+                            ข้ามข้อนี้
+                        </button>
+                        <button id="btn-prac-check" onclick="checkPracticeAnswer()"
+                            class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-md transition">
+                            <i class="fa-solid fa-check mr-1"></i> ตรวจคำตอบ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feedback & Explanation -->
+                <div id="prac-feedback" class="hidden p-5 rounded-2xl border transition-all duration-300"></div>
+                <div id="prac-explanation-box"
+                    class="hidden space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner">
+                    <h5 class="font-bold text-slate-800 text-sm border-b border-slate-200 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-cyan-600"></i> เฉลยและวิธีทำละเอียด:
+                    </h5>
+                    <div id="prac-explanation-text" class="text-sm text-slate-700 space-y-3 math-font leading-relaxed">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 4: EXAM START SCREEN -->
+        <!-- ==================================================== -->
+        <section id="sec-exam-start" class="hidden max-w-xl mx-auto space-y-6 animate-[fadeIn_0.3s_ease-out]">
+            <div
+                class="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-slate-100 space-y-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-50 rounded-bl-full -mr-4 -mt-4"></div>
+
+                <div class="text-center space-y-3 relative z-10">
+                    <div
+                        class="w-20 h-20 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center text-4xl mx-auto shadow-sm transform -rotate-3">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800 mt-4">ทดสอบเก็บคะแนน ม.6</h2>
+                    <p class="text-sm text-slate-500">บทที่ 17.1 ของแข็งและสภาพยืดหยุ่นของของแข็ง</p>
+                </div>
+
+                <div
+                    class="bg-red-50 rounded-2xl p-5 border border-red-200 space-y-3 text-sm text-red-900/90 leading-relaxed shadow-inner">
+                    <h4 class="font-bold text-red-900 flex items-center gap-2 border-b border-red-200/50 pb-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> กติกาการสอบ (อ่านก่อนเริ่ม):
+                    </h4>
+                    <ul class="list-disc pl-5 space-y-1.5 text-xs md:text-sm font-medium">
+                        <li>มีข้อสอบทั้งหมด <strong>5 ข้อ</strong> ข้อละ 2 คะแนน (คะแนนเต็ม 10 คะแนน)</li>
+                        <li>ขอบเขตเนื้อหา: สภาพยืดหยุ่น/พลาสติก, ความเค้น, ความเครียด, และมอดุลัสของยัง</li>
+                        <li>มีระยะเวลาจำกัดในการทำข้อสอบ <strong>15 นาที</strong></li>
+                        <li><strong>ห้ามรีเฟรชหน้าจอหรือสลับแท็บ</strong> มิฉะนั้นจะถูกล็อคส่งคำตอบอัตโนมัติ</li>
+                    </ul>
+                </div>
+
+                <!-- Student Form -->
+                <div class="space-y-4 pt-2">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1.5">ชื่อ-นามสกุลผู้สอบ:</label>
+                            <input type="text" id="exam-student-name" placeholder="ระบุชื่อจริง นามสกุล"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition bg-slate-50 focus:bg-white text-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1.5">ชั้น ม.6 / ห้อง:</label>
+                                <select id="exam-student-class"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition bg-slate-50 focus:bg-white text-sm appearance-none">
+                                    <option value="" disabled selected>เลือกห้องเรียน</option>
+                                    <option value="1">6/1</option>
+                                    <option value="2">6/2</option>
+                                    <option value="3">6/3</option>
+                                    <option value="4">6/4</option>
+                                    <option value="5">6/5</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1.5">เลขที่ (เลขดึงค่าโจทย์):</label>
+                                <input type="number" id="exam-student-no" placeholder="ระบุเลขที่ 1-40" min="1" max="40"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition bg-slate-50 focus:bg-white text-sm">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button onclick="showSection('home')"
+                        class="py-3 px-6 bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 font-bold rounded-xl transition text-sm">
+                        กลับ
+                    </button>
+                    <button onclick="startExamProcess()"
+                        class="flex-1 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-lg shadow-slate-200 transition text-sm flex justify-center items-center gap-2">
+                        เริ่มการสอบ <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 5: LIVE EXAM SCREEN -->
+        <!-- ==================================================== -->
+        <section id="sec-exam-live" class="hidden space-y-6 relative animate-[fadeIn_0.2s_ease-out]">
+            <!-- Sticky Timer -->
+            <div
+                class="sticky top-2 z-50 bg-slate-900/95 backdrop-blur text-white px-4 py-3.5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-slate-700">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div
+                        class="w-8 h-8 bg-slate-800 rounded-full flex items-center justify-center text-cyan-400 border border-slate-600">
+                        <i class="fa-solid fa-user-graduate text-xs"></i>
+                    </div>
+                    <span class="text-sm text-slate-300 truncate font-medium">
+                        <strong class="text-white" id="lbl-exam-user-info">-</strong>
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-800/80 px-4 py-1.5 rounded-full border border-slate-700">
+                    <i class="fa-solid fa-stopwatch text-cyan-400 animate-pulse"></i>
+                    <span class="text-sm text-slate-400">เหลือเวลาสอบ:</span>
+                    <span id="exam-timer-display"
+                        class="font-mono text-lg font-bold text-white tracking-wider">15:00</span>
+                </div>
+            </div>
+
+            <!-- Questions List -->
+            <div id="exam-questions-container" class="space-y-6"></div>
+
+            <!-- Submit Button -->
+            <div class="pt-6 pb-10">
+                <button onclick="confirmSubmitExam()"
+                    class="w-full py-4 bg-white hover:bg-slate-100 text-slate-900 border-2 border-slate-200 font-bold rounded-2xl shadow-md transition flex items-center justify-center gap-2 text-lg">
+                    <i class="fa-solid fa-paper-plane text-slate-900"></i> ยืนยันและส่งข้อสอบ
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SECTION 6: EXAM RESULTS SCREEN -->
+        <!-- ==================================================== -->
+        <section id="sec-exam-result" class="hidden max-w-4xl mx-auto space-y-6 animate-[fadeIn_0.5s_ease-out]">
+            <div class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-100">
+                <div class="text-center space-y-3 border-b border-slate-100 pb-8 mb-8">
+                    <span
+                        class="bg-cyan-100 text-cyan-700 border border-cyan-200 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest inline-block mb-2">
+                        ผลการประเมินคะแนน
+                    </span>
+                    <h2 class="text-3xl font-extrabold text-slate-800">ผลสอบ ของแข็งและสภาพยืดหยุ่น \( (17.1) \)</h2>
+                    <p class="text-slate-500">ระบบได้ประเมินผลคะแนนของคุณและจัดเก็บประวัติเรียบร้อยแล้ว</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-around gap-8 mb-10">
+                    <!-- Score Circle -->
+                    <div class="relative w-40 h-40 flex items-center justify-center shrink-0">
+                        <svg class="absolute inset-0 w-full h-full transform -rotate-90 drop-shadow-md">
+                            <circle cx="80" cy="80" r="70" stroke="#f1f5f9" stroke-width="12" fill="transparent" />
+                            <circle cx="80" cy="80" r="70" id="res-circle-progress" stroke="#0891b2"
+                                stroke-dasharray="439.8" stroke-dashoffset="439.8" stroke-width="12" fill="transparent"
+                                stroke-linecap="round" class="transition-all duration-1500 ease-out" />
+                        </svg>
+                        <div class="text-center absolute">
+                            <span id="lbl-res-total-score" class="text-5xl font-black text-slate-800">0</span>
+                            <span class="text-slate-400 text-sm font-bold block mt-1">/ 10</span>
+                        </div>
+                    </div>
+
+                    <!-- Info Cards -->
+                    <div class="w-full space-y-4">
+                        <div
+                            class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center">
+                            <span class="text-xs text-slate-500 font-bold uppercase"><i
+                                    class="fa-solid fa-user text-slate-400 mr-2"></i>ผู้ทดสอบ</span>
+                            <div class="text-right">
+                                <p id="lbl-res-student-name" class="font-bold text-slate-800">-</p>
+                                <p id="lbl-res-student-meta" class="text-xs text-slate-500">-</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block mb-1"><i
+                                        class="fa-solid fa-clock text-slate-400 mr-1"></i>เวลาที่ใช้สอบ</span>
+                                <p id="lbl-res-time-elapsed" class="text-sm font-bold text-slate-800">-</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block mb-1"><i
+                                        class="fa-solid fa-calendar text-slate-400 mr-1"></i>วันที่ส่งคำตอบ</span>
+                                <p id="lbl-res-finished-at" class="text-xs font-bold text-slate-800 mt-0.5">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lbl-res-badge-feedback"
+                    class="text-center p-4 rounded-xl mb-8 border border-slate-200 bg-slate-50 text-sm">
+                    <!-- Feedback message injected by JS -->
+                </div>
+
+                <!-- Detailed Table -->
+                <h4 class="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2"><i
+                        class="fa-solid fa-chart-pie text-cyan-600"></i> สรุปผลการสอบรายข้อ</h4>
+                <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8 shadow-sm">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-500 bg-slate-50 uppercase font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-5 py-4">ข้อที่</th>
+                                <th class="px-5 py-4">เนื้อหา / หัวข้อการทดสอบ</th>
+                                <th class="px-5 py-4 text-center">คะแนนเต็ม</th>
+                                <th class="px-5 py-4 text-center">คะแนนที่ได้</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exam-result-tbody" class="divide-y divide-slate-100">
+                            <!-- JS Injected -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Solutions Toggle -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 p-2">
+                    <button onclick="toggleExamSolutionBox()" id="btn-toggle-solutions"
+                        class="w-full py-4 hover:bg-slate-100 text-slate-700 font-bold rounded-xl transition text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-chevron-down" id="icon-toggle-sol"></i> <span
+                            id="lbl-toggle-solution-text">แสดงคำเฉลยอย่างละเอียดและแสดงวิธีทำ</span>
+                    </button>
+                    <div id="exam-solution-box" class="hidden p-4 space-y-6">
+                        <div id="exam-solutions-container" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- Bottom Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-slate-100">
+                    <button onclick="showSection('practice')"
+                        class="py-4 bg-white hover:bg-slate-50 border-2 border-slate-200 text-slate-600 font-bold rounded-xl transition flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-dumbbell"></i> ไปทำโจทย์ฝึกฝนเพิ่มเติม
+                    </button>
+                    <button onclick="showSection('home')"
+                        class="py-4 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-md transition flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-house"></i> กลับหน้าหลัก
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Alert Modal -->
+    <div id="modal-alert"
+        class="hidden fixed inset-0 z-[100] overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 max-w-sm w-full text-center space-y-5 transform transition-all duration-200 scale-95 opacity-0"
+            id="modal-alert-card">
+            <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl" id="modal-alert-icon">
+                <i class="fa-solid fa-info"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800 mb-1" id="modal-alert-title">Title</h3>
+                <p class="text-sm text-slate-500 leading-relaxed" id="modal-alert-msg">Message</p>
+            </div>
+            <button onclick="closeAlertModal()"
+                class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-sm text-sm transition">
+                ตกลง / รับทราบ
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Confirm Modal -->
+    <div id="modal-confirm"
+        class="hidden fixed inset-0 z-[100] overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 max-w-sm w-full text-center space-y-5 transform transition-all duration-200 scale-95 opacity-0"
+            id="modal-confirm-card">
+            <div
+                class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl bg-cyan-100 text-cyan-600">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800 mb-1">ยืนยันการส่งข้อสอบ</h3>
+                <p class="text-sm text-slate-500 leading-relaxed" id="modal-confirm-msg">ข้อความ</p>
+            </div>
+            <div class="flex gap-3 mt-2">
+                <button onclick="closeConfirmModal()"
+                    class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm">
+                    ยกเลิก
+                </button>
+                <button onclick="executeSubmitExam()"
+                    class="flex-1 py-3 bg-white hover:bg-slate-100 text-slate-900 border border-slate-200 font-bold rounded-xl shadow-sm text-sm transition">
+                    ยืนยันส่งข้อสอบ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-300 py-8 text-center text-xs space-y-4 mt-auto border-t border-slate-800">
+        <p class="font-bold text-white text-sm md:text-base px-4">รายวิชา ฟิสิกส์ 5 รหัสวิชา ว33205 โรงเรียนห้องสอนศึกษา ในพระอุปถัมภ์ฯ</p>
+        <div class="flex justify-center">
+            <div
+                class="inline-flex items-center gap-1.5 bg-[#1e293b]/90 text-white rounded-full px-6 py-2.5 border border-slate-700/50 shadow-sm text-xs md:text-sm font-semibold">
+                <span class="text-cyan-400 font-bold">DEV BADGE</span> : นายนพพร สมบูรณ์ชัย
+            </div>
+        </div>
+        <p class="text-white/40 text-[10px] md:text-xs">© 2026 Interactive Physics Learning Portal </p>
+    </footer>
+
+    <!-- ==================================================== -->
+    <!-- JAVASCRIPT SYSTEM -->
+    <!-- ==================================================== -->
+    <script src="app.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@source "index.html";
+@source "app.js";
+
+
+@theme {
+  --color-cyan-50: #ecfeff;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-cyan-700: #0e7490;
+  --color-cyan-800: #155e75;
+  --color-cyan-900: #164e63;
+  --color-cyan-950: #083344;
+}
+
+:root {
+    --ink: #0f172a;
+    --muted: #64748b;
+    --paper: rgba(255, 255, 255, 0.95);
+    --line: rgba(148, 163, 184, 0.12);
+    --success: #0d9488; /* teal success */
+    --accent: #0891b2; /* cyan accent */
+}
+
+.total-questions-badge {
+    display: inline-block;
+    background-color: var(--accent);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+body {
+    font-family: 'Prompt', 'Sarabun', sans-serif;
+    color: var(--ink);
+    /* Cool Engineering Grid Theme for Solids & Elasticity */
+    background:
+        linear-gradient(135deg, rgba(8, 145, 178, 0.06), transparent 35%),
+        linear-gradient(225deg, rgba(30, 41, 59, 0.04), transparent 35%),
+        repeating-linear-gradient(0deg, rgba(148, 163, 184, 0.03) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(148, 163, 184, 0.03) 0 1px, transparent 1px 24px),
+        #f8fafc;
+    text-rendering: optimizeLegibility;
+}
+
+html.exam-locked,
+body.exam-locked {
+    overscroll-behavior-y: none;
+}
+
+.math-font {
+    font-family: 'Sarabun', sans-serif;
+}
+
+header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0891b2 100%) !important;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition: all 150ms ease;
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0891b2;
+}
+
+/* Vibrating/Shaking Animation for Over-Tensioned Wires */
+@keyframes wireVibrate {
+    0%, 100% { transform: translateY(0); }
+    20% { transform: translateY(-1px) translateX(0.5px); }
+    40% { transform: translateY(1px) translateX(-0.5px); }
+    60% { transform: translateY(-0.5px) translateX(-0.5px); }
+    80% { transform: translateY(0.5px) translateX(0.5px); }
+}
+
+.wire-vibrate {
+    animation: wireVibrate 0.15s infinite;
+}
+
+/* Custom Font Awesome placeholder styling */
+.placeholder-fa::placeholder {
+    font-family: 'Font Awesome 6 Free', 'Prompt', sans-serif;
+    font-weight: 900;
+}
