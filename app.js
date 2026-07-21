@@ -695,7 +695,7 @@ const QUESTION_TEMPLATES = [
             const area = r ? getSeededRandomBase('17_1_1_stress_simple_a', r, 1.2, 2.8, 0.2) : 2.0; // 1.2 - 2.8 mm²
             const f_base = r ? getSeededRandomBase('17_1_1_stress_simple_f', r, 300, 600, 50) : 400;
             const f = r ? f_base + offset : 400;
-            
+
             const area_m2 = area * 1e-6;
             const stress = f / area_m2;
 
@@ -734,7 +734,7 @@ const QUESTION_TEMPLATES = [
                 answersRaw: [stress],
                 explanation: () => `
       - แรงดึง/กด \\( F = ${f} \\text{ kN} = ${F_N} \\text{ N} \\)<br>
-      - พื้นที่หน้าตัดสี่เหลี่ยมจัตุรัส: \\( A = \\text{ด้าน} \\times \\text{ด้าน} = ${side/100} \\text{ m} \\times ${side/100} \\text{ m} = ${A} \\text{ m}^2 \\)<br>
+      - พื้นที่หน้าตัดสี่เหลี่ยมจัตุรัส: \\( A = \\text{ด้าน} \\times \\text{ด้าน} = ${side / 100} \\text{ m} \\times ${side / 100} \\text{ m} = ${A} \\text{ m}^2 \\)<br>
       จากสูตร: \\( \\sigma = \\frac{F}{A} \\)<br>
       \\( \\sigma = \\frac{${F_N}}{${A}} = ${formatScientificLaTeX(stress, 3)} \\text{ N/m}^2 \\)
     `
@@ -1263,9 +1263,9 @@ function regeneratePractice() {
         } else {
             R = "standard_" + Math.floor(Math.random() * 1000000);
         }
-        
+
         instance = template.generate(R);
-        
+
         const vals = getActiveParamValues(instance.params);
         if (vals.length > 0) {
             if (hasDuplicateVariables(instance.params)) {
@@ -1368,7 +1368,7 @@ function startExamProcess() {
 
     // Filter questions by subtopics:
     const topics = ['17.1.1', '17.1.2', '17.1.3', '17.1.4', '17.1.5'];
-    
+
     // Choose one topic randomly to be the choice question
     const choiceTopicIndex = Math.floor(Math.random() * topics.length);
     const choiceTopic = topics[choiceTopicIndex];
@@ -1400,12 +1400,12 @@ function startExamProcess() {
         let instance = null;
         let attempts = 0;
         const history = getHistory();
-        
+
         while (attempts < 100) {
             attempts++;
             const seed = `${num}_${timestamp}_${template.id}_${attempts}`;
             instance = template.generate(seed);
-            
+
             const vals = getActiveParamValues(instance.params);
             if (vals.length > 0) {
                 if (hasDuplicateVariables(instance.params)) {
