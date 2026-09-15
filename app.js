@@ -167,6 +167,75 @@ let examStudentInfo = {};
 let examSeed = null;
 let examExitGuardEnabled = false;
 
+let examCheatStats = {
+    tabSwitches: 0,
+    refreshes: 0
+};
+let lastCheatEventTime = 0;
+let cheatBannerTimeout = null;
+
+function showFloatingCheatBanner(message) {
+    const banner = document.getElementById('floating-cheat-banner');
+    const msgEl = document.getElementById('floating-cheat-msg');
+    if (!banner || !msgEl) return;
+
+    msgEl.innerText = message;
+    clearTimeout(cheatBannerTimeout);
+
+    banner.classList.remove('pointer-events-none', '-translate-y-8', 'opacity-0');
+    banner.classList.add('translate-y-0', 'opacity-100');
+
+    cheatBannerTimeout = setTimeout(() => {
+        banner.classList.remove('translate-y-0', 'opacity-100');
+        banner.classList.add('-translate-y-8', 'opacity-0', 'pointer-events-none');
+    }, 3500);
+}
+
+function handleCheatDetection(eventType) {
+    if (!examIsActive) return;
+    const now = Date.now();
+    if (now - lastCheatEventTime < 500) return; // 500ms debounce
+    lastCheatEventTime = now;
+
+    examCheatStats.tabSwitches = (examCheatStats.tabSwitches || 0) + 1;
+    showFloatingCheatBanner(`ตรวจพบการสลับแท็บ (ครั้งที่ ${examCheatStats.tabSwitches}) - กรุณาทำข้อสอบในหน้านี้อย่างต่อเนื่อง`);
+    debouncedSaveExamState();
+}
+
+if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            handleCheatDetection('visibilitychange');
+        }
+    });
+}
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('blur', () => {
+        handleCheatDetection('blur');
+    });
+}
+
+function saveExamStateToStorage() {
+    if (!examIsActive) return;
+    try {
+        const answers = getExamAnswers();
+        const state = {
+            examQuestions: currentExamQuestions,
+            studentInfo: examStudentInfo,
+            examStartTimestamp,
+            examDeadlineTimestamp,
+            examDurationSeconds,
+            cheatStats: examCheatStats,
+            answers: answers
+        };
+        localStorage.setItem(EXAM_STATE_KEY, JSON.stringify(state));
+    } catch (e) {
+        console.error("Failed to save exam state to localStorage:", e);
+    }
+}
+const debouncedSaveExamState = debounce(saveExamStateToStorage, 250);
+
 // --- Helper Math / Format Functions ---
 function cleanAndParseNumber(str) {
     let clean = str.trim().toLowerCase().replace(/\\times/g, 'e').replace(/x/g, 'e').replace(/\*/g, 'e').replace(/10\^/g, '').replace(/\{/g, '').replace(/\}/g, '').replace(/\s+/g, '');
@@ -1640,6 +1709,8 @@ function startExamProcess() {
     examSeed = `${num}_${timestamp}`;
     examDurationSeconds = 15 * 60; // 15 mins
     examStudentInfo = { name, class: cls, number: num, seed: examSeed };
+    examCheatStats = { tabSwitches: 0, refreshes: 0 };
+    lastCheatEventTime = 0;
 
     const examRNG = new SeededRNG(examSeed);
     const pureShuffle = (array) => examRNG.shuffle(array);
@@ -1719,9 +1790,7 @@ function startExamProcess() {
     examIsActive = true;
     examSubmissionInProgress = false;
 
-    sessionStorage.setItem(EXAM_STATE_KEY, JSON.stringify({
-        examQuestions: currentExamQuestions, studentInfo: examStudentInfo, examStartTimestamp, examDeadlineTimestamp, examDurationSeconds
-    }));
+    saveExamStateToStorage();
 
     setupExamLocks();
     showSection('exam-live');
@@ -1747,25 +1816,26 @@ function renderExamLiveDOM() {
         let inputHTML = '';
         if (q.type === 'choice') {
             inputHTML += `<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">`;
-            q.choices.forEach((c, cIdx) => {
+            q.choices.forEach((c) => {
+                const escaped = c.replace(/"/g, '&quot;');
                 inputHTML += `<label class="flex items-center gap-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 p-4 rounded-xl cursor-pointer transition">
-              <input type="radio" name="exam-q${idx}" value="${c}" class="w-4 h-4 text-cyan-600 focus:ring-cyan-500">
+              <input type="radio" name="exam-q${idx}" value="${escaped}" onchange="debouncedSaveExamState()" class="w-4 h-4 text-cyan-600 focus:ring-cyan-500">
               <span class="text-sm text-slate-800">${c}</span>
             </label>`;
             });
             inputHTML += `</div>`;
         } else if (q.type === 'numeric_single') {
             inputHTML += `<div class="mt-4"><label class="block text-xs font-bold text-slate-500 mb-1">${q.inputs[0].label}</label>
-            <input type="text" id="exam-q${idx}-val1" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm"></div>`;
+            <input type="text" id="exam-q${idx}-val1" oninput="debouncedSaveExamState()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm"></div>`;
         } else if (q.type === 'numeric_double') {
             inputHTML += `<div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1">${q.inputs[0].label}</label>
-              <input type="text" id="exam-q${idx}-val1" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm">
+              <input type="text" id="exam-q${idx}-val1" oninput="debouncedSaveExamState()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm">
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-500 mb-1">${q.inputs[1].label}</label>
-              <input type="text" id="exam-q${idx}-val2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm">
+              <input type="text" id="exam-q${idx}-val2" oninput="debouncedSaveExamState()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 outline-none font-mono text-sm">
             </div>
           </div>`;
         }
@@ -1803,11 +1873,14 @@ function getExamAnswers() {
             const chk = document.querySelector(`input[name="exam-q${idx}"]:checked`);
             return chk ? chk.value : null;
         } else if (q.type === 'numeric_single') {
-            return [document.getElementById(`exam-q${idx}-val1`).value];
+            const el1 = document.getElementById(`exam-q${idx}-val1`);
+            return [el1 ? el1.value : ''];
         } else if (q.type === 'numeric_double') {
+            const el1 = document.getElementById(`exam-q${idx}-val1`);
+            const el2 = document.getElementById(`exam-q${idx}-val2`);
             return [
-                document.getElementById(`exam-q${idx}-val1`).value,
-                document.getElementById(`exam-q${idx}-val2`).value
+                el1 ? el1.value : '',
+                el2 ? el2.value : ''
             ];
         }
         return null;
@@ -1877,11 +1950,18 @@ function submitExam(timeExpired = false) {
     const timeStr = `${Math.floor(elapsed / 60)} นาที ${elapsed % 60} วินาที`;
 
     const payload = {
-        score: total_score, timeTaken: timeStr, studentInfo: examStudentInfo,
-        gradedResults, examQuestions: currentExamQuestions, date: new Date().toLocaleDateString('th-TH')
+        score: total_score,
+        timeTaken: timeStr,
+        studentInfo: examStudentInfo,
+        gradedResults,
+        examQuestions: currentExamQuestions,
+        date: new Date().toLocaleDateString('th-TH'),
+        cheatStats: { ...examCheatStats }
     };
-    localStorage.setItem('last_exam_results_17_1', JSON.stringify(payload));
-    sessionStorage.removeItem(EXAM_STATE_KEY);
+    try {
+        localStorage.setItem('last_exam_results_17_1', JSON.stringify(payload));
+        localStorage.removeItem(EXAM_STATE_KEY);
+    } catch (e) { }
 
     updateLatestScore();
     showSection('exam-result');
@@ -1896,7 +1976,23 @@ function renderExamResults(data) {
 
     document.getElementById('lbl-res-total-score').innerText = data.score;
     const circle = document.getElementById('res-circle-progress');
-    circle.style.strokeDashoffset = 439.8 - (data.score / 10) * 439.8;
+    if (circle) circle.style.strokeDashoffset = 439.8 - (data.score / 10) * 439.8;
+
+    // Display / Hide Cheat & Caution Summary Card
+    const cheatCard = document.getElementById('exam-cheat-summary-card');
+    const lblSwitches = document.getElementById('lbl-res-tab-switches');
+    const lblRefreshes = document.getElementById('lbl-res-refreshes');
+    const stats = data.cheatStats || { tabSwitches: 0, refreshes: 0 };
+
+    if (cheatCard && lblSwitches && lblRefreshes) {
+        if (stats.tabSwitches > 0 || stats.refreshes > 0) {
+            lblSwitches.innerText = `${stats.tabSwitches} ครั้ง`;
+            lblRefreshes.innerText = `${stats.refreshes} ครั้ง`;
+            cheatCard.classList.remove('hidden');
+        } else {
+            cheatCard.classList.add('hidden');
+        }
+    }
 
     const fb = document.getElementById('lbl-res-badge-feedback');
     if (data.score >= 8) fb.innerHTML = `<span class="text-emerald-600 font-bold"><i class="fa-solid fa-star"></i> ยอดเยี่ยม! คุณเข้าใจทฤษฎีและสูตรคำนวณสภาพยืดหยุ่นได้เป็นอย่างดี</span>`;
@@ -1982,26 +2078,74 @@ window.onload = () => {
     switchReviewTab('17-1-1');
     queueTypeset(document.body);
 
-    const activeSession = sessionStorage.getItem(EXAM_STATE_KEY);
-    if (activeSession) {
-        try {
+    // Check saved exam session in localStorage for Auto-Resume on Refresh
+    try {
+        const activeSession = localStorage.getItem(EXAM_STATE_KEY);
+        if (activeSession) {
             const s = JSON.parse(activeSession);
-            if (s.examDeadlineTimestamp > Date.now()) {
+            if (s && s.examDeadlineTimestamp > Date.now()) {
+                // Count refresh
+                s.cheatStats = s.cheatStats || { tabSwitches: 0, refreshes: 0 };
+                s.cheatStats.refreshes = (s.cheatStats.refreshes || 0) + 1;
+                examCheatStats = s.cheatStats;
+
                 currentExamQuestions = s.examQuestions;
                 examStudentInfo = s.studentInfo;
                 examSeed = s.studentInfo.seed || null;
+                examStartTimestamp = s.examStartTimestamp;
                 examDeadlineTimestamp = s.examDeadlineTimestamp;
                 examDurationSeconds = s.examDurationSeconds;
                 examIsActive = true;
+                examSubmissionInProgress = false;
+
+                // Update localStorage with updated refresh count
+                localStorage.setItem(EXAM_STATE_KEY, JSON.stringify(s));
+
                 document.getElementById('lbl-exam-user-info').innerHTML = `${s.studentInfo.name} (ม.6/${s.studentInfo.class} เลขที่ ${s.studentInfo.number})`;
+
                 renderExamLiveDOM();
+
+                // Restore user answers
+                if (Array.isArray(s.answers)) {
+                    s.answers.forEach((ans, idx) => {
+                        if (!ans) return;
+                        const q = currentExamQuestions[idx];
+                        if (!q) return;
+                        if (q.type === 'choice') {
+                            const radios = document.querySelectorAll(`input[name="exam-q${idx}"]`);
+                            radios.forEach(r => {
+                                if (r.value === ans) r.checked = true;
+                            });
+                        } else if (q.type === 'numeric_single') {
+                            if (Array.isArray(ans) && ans[0]) {
+                                const input = document.getElementById(`exam-q${idx}-val1`);
+                                if (input) input.value = ans[0];
+                            }
+                        } else if (q.type === 'numeric_double') {
+                            if (Array.isArray(ans)) {
+                                if (ans[0]) {
+                                    const input1 = document.getElementById(`exam-q${idx}-val1`);
+                                    if (input1) input1.value = ans[0];
+                                }
+                                if (ans[1]) {
+                                    const input2 = document.getElementById(`exam-q${idx}-val2`);
+                                    if (input2) input2.value = ans[1];
+                                }
+                            }
+                        }
+                    });
+                }
+
                 setupExamLocks();
                 showSection('exam-live');
                 startExamTimer();
             } else {
-                sessionStorage.removeItem(EXAM_STATE_KEY);
+                localStorage.removeItem(EXAM_STATE_KEY);
             }
-        } catch (e) { sessionStorage.removeItem(EXAM_STATE_KEY); }
+        }
+    } catch (e) {
+        console.error("Failed to restore exam session:", e);
+        try { localStorage.removeItem(EXAM_STATE_KEY); } catch (err) { }
     }
 
     const totalQuestions = QUESTION_TEMPLATES.length;
